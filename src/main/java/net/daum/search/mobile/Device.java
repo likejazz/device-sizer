@@ -6,8 +6,8 @@ import lombok.ToString;
 
 @ToString
 public class Device {
-    private final double TITLE_SUMMARY_RATIO = 0.6;
-    private final double CONTENT_SUMMARY_RATIO = 0.9;
+    private final double TITLE_SUMMARY_RATIO    = 0.6;
+    private final double CONTENT_SUMMARY_RATIO  = 0.9;
 
     @Setter private int pixelsPerChar = 4;
 

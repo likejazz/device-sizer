@@ -10,6 +10,7 @@ public class DeviceSizer {
     private final String OTHER = "other";
     private final String OTHER_VIEWPORT_SIZE = "320x480";
 
+    // regex patterns
     List<DevicePattern> patterns = new ArrayList<DevicePattern>();
     private void addPattern(String regex, String deviceReplacement) {
         patterns.add(new DevicePattern(Pattern.compile(regex), deviceReplacement));
@@ -43,7 +44,7 @@ public class DeviceSizer {
         addPattern("(iPhone);", null);
     }
 
-    // make Device that contains parsed results
+    // make `Device` that contains parsed results
     private Device makeDevice(String deviceName, String userAgent) {
         String viewportSize = OTHER_VIEWPORT_SIZE;
 
@@ -51,29 +52,26 @@ public class DeviceSizer {
             case "iPhone": // 4 inch
                 viewportSize = "320x568";
                 break;
-            case "GT-I9300": // 4.8 inch (Galaxy S3)
-                viewportSize = "720x1280x8";
-                break;
-            case "GT-I9100": // Galaxy S2
-            case "GT-I9000": // Galaxy S
-            case "IM-A760S": // SKY Vega Racer (SKT)
-            case "IM-A780L": // SKY Vega Racer (LG U+)
-            case "IM-A770K": // SKY Vega Racer (KT)
-                viewportSize = "480x800x6";
-                break;
+            case "GT-I9300":        // 4.8 inch (Galaxy S3)
+            case "Galaxy Nexus":    // Galaxy Nexus
             case "LG-P930":         // Optimus LTE
             case "LG-F260S":        // Optimus LTE III
             case "LG-LU6200":       // Optimus LTE
             case "LG-P936/V10c":    // Optimus LTE
                 viewportSize = "720x1280x8";
                 break;
+            case "GT-I9100":            // Galaxy S2
+            case "SAMSUNG-SGH-I777":    // Galaxy S II
+            case "GT-I9000":            // Galaxy S
+            case "IM-A760S":            // SKY Vega Racer (SKT)
+            case "IM-A780L":            // SKY Vega Racer (LG U+)
+            case "IM-A770K":            // SKY Vega Racer (KT)
+                viewportSize = "480x800x6";
+                break;
             case "LG-P895":     // Optimus Vu
             case "LG-F100L":    // Optimus Vu
             case "LG-F200K":    // Optimus Vu II
                 viewportSize = "768x1024x8";
-                break;
-            case "SAMSUNG-SGH-I777": // Galaxy S II
-                viewportSize = "480x800x6";
                 break;
             case "LG-P500":     // Optimus One
             case "LG-P504":     // Optimus One
@@ -88,9 +86,6 @@ public class DeviceSizer {
             case "GT-N7100": // Galaxy Note 2
                 viewportSize = "720x1280";
                 break;
-            case "Galaxy Nexus": // Galaxy Nexus
-                viewportSize = "720x1280x6";
-                break;
             case "Nexus S": // Google Nexus S
                 viewportSize = "480x800";
                 break;
@@ -104,20 +99,20 @@ public class DeviceSizer {
         Device device = new Device();
         device.setDeviceName(deviceName);
         device.setUserAgent(userAgent);
-        device.setViewportSize(viewportSize);       // raw data 
+        device.setViewportSize(viewportSize);       // viewport raw data 
                                                     // eg. 768x1024x8
 
         String[] size = viewportSize.split("x");    // eg. size[0] = 768, size[1] = 1024, size[2] = 8
         device.setPortraitWidth(Integer.parseInt(size[0]));
         device.setLandscapeWidth(Integer.parseInt(size[1]));
         
-        if (size.length == 3) // if it has ppc
+        if (size.length == 3) // if it has 3rd(ppc) parameter
             device.setPixelsPerChar(Integer.parseInt(size[2]));
 
         return device;
     }
 
-    // compare regex patterns with device's user-agent.
+    // match regex patterns with device's user-agent.
     public Device parse(String agentString) {
         String deviceName = null;
         if (agentString != null) {
