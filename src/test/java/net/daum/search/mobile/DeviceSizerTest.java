@@ -122,7 +122,7 @@ public class DeviceSizerTest {
         // Galaxy Nexus
         ua = "Mozilla/5.0 (Linux; U; Android 4.0; xx-xx; Galaxy Nexus Build/ITL41F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
         device = new DeviceSizer().parse(ua);
-        Assert.assertEquals("720x1280x6", device.getViewportSize());
+        Assert.assertEquals("720x1280x8", device.getViewportSize());
 
         // Google Nexus S
         ua = "Mozilla/5.0 (Linux; U; Android 2.3; xx-xx; Nexus S Build/GRH41B) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
