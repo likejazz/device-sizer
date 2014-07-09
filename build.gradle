@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.7
+version = '1.0-SNAPSHOT'
+
+// Required by uploadArchives:
+group = 'net.daum.search.mobile'
+
+repositories {
+    mavenCentral()
+}
+
+uploadArchives {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.projectlombok:lombok:1.14.4'
+}
