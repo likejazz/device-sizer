@@ -1,0 +1,1 @@
+/Users/likejazz/Java/IdeaProjects/DeviceViewport/src/main/java/net/daum/search/mobile/DeviceViewport.java
