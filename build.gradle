@@ -20,5 +20,5 @@ uploadArchives {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'org.projectlombok:lombok:1.14.4'
-	compile 'org.apache.commons:commons-lang3:3.0'
+    compile 'org.apache.commons:commons-lang3:3.0'
 }
