@@ -1,12 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.6
 version = '1.0-SNAPSHOT'
 
 // Required by uploadArchives:
 group = 'net.daum.search.mobile'
 
+// By default, Gradle does not define any repositories.
+// You need to define at least one before you can use external dependencies. 
 repositories {
     mavenCentral()
 }
@@ -18,4 +20,5 @@ uploadArchives {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'org.projectlombok:lombok:1.14.4'
+	compile 'org.apache.commons:commons-lang3:3.0'
 }

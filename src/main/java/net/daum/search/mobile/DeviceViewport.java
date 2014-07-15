@@ -1,5 +1,6 @@
 package net.daum.search.mobile;
 
+import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,6 +10,7 @@ public class DeviceViewport {
 
     private final String OTHER = "other";
     private final String OTHER_VIEWPORT_SIZE = "720x1280x329";
+    private String deviceName;
 
     // regex patterns
     List<DevicePattern> patterns = new ArrayList<DevicePattern>();
@@ -44,52 +46,57 @@ public class DeviceViewport {
         addPattern("(iPhone);", null);
     }
 
+    // is abbr from StringUtils.equals(deviceName, xx)
+    private boolean m(String expectedDeviceName) {
+        return StringUtils.equals(this.deviceName, expectedDeviceName);
+    }
+
     // make `Device` that contains parsed results
     private Device makeDevice(String deviceName, String userAgent) {
         String viewportSize = OTHER_VIEWPORT_SIZE;
 
-        switch (deviceName) {
-            case "iPhone": // 4 inch
-                viewportSize = "320x568x163";
-                break;
-            case "GT-I9500":        // Galaxy S4
-                viewportSize = "1080x1920x441";
-                break;
-            case "GT-I9300":        // 4.8 inch (Galaxy S3)
-            case "Galaxy Nexus":    // Galaxy Nexus
-            case "LG-P930":         // Optimus LTE
-            case "LG-F260S":        // Optimus LTE III
-            case "LG-LU6200":       // Optimus LTE
-            case "LG-P936/V10c":    // Optimus LTE
-                viewportSize = "720x1280x306";
-                break;
-            case "GT-I9100":            // Galaxy S2
-            case "SAMSUNG-SGH-I777":    // Galaxy S II
-            case "GT-I9000":            // Galaxy S
-            case "IM-A760S":            // SKY Vega Racer (SKT)
-            case "IM-A780L":            // SKY Vega Racer (LG U+)
-            case "IM-A770K":            // SKY Vega Racer (KT)
-                viewportSize = "480x800x217";
-                break;
-            case "LG-P895":     // Optimus Vu
-            case "LG-F100L":    // Optimus Vu
-            case "LG-F200K":    // Optimus Vu II
-                viewportSize = "768x1024x256";
-                break;
-            case "SM-N900T": // Galaxy Note 3
-                viewportSize = "1080x1920x386";
-                break;
-            case "GT-N7100": // Galaxy Note 2
-                viewportSize = "720x1280x256";
-                break;
-            case "Nexus S": // Google Nexus S
-                viewportSize = "480x800x233";
-                break;
-            case "iPad": // 12 inch
-                viewportSize = "768x1024x132";
-                break;
-            default:
-                viewportSize = OTHER_VIEWPORT_SIZE;
+        this.deviceName = deviceName;
+        if (m("iPhone")) {                      // 4 inch
+            viewportSize = "320x568x163";
+
+        } else if (m("GT-I9500")) {             // Galaxy S4
+            viewportSize = "1080x1920x441";
+
+        } else if (m("GT-I9300") ||             // 4.8 inch (Galaxy S3)
+                m("Galaxy Nexus") ||            // Galaxy Nexus
+                m("LG-P930") ||                 // Optimus LTE
+                m("LG-F260S") ||                // Optimus LTE III
+                m("LG-LU6200") ||               // Optimus LTE
+                m("LG-P936/V10c")) {            // Optimus LTE
+            viewportSize = "720x1280x306";
+
+        } else if (m("GT-I9100") ||             // Galaxy S2
+                m("SAMSUNG-SGH-I777") ||        // Galaxy S II
+                m("GT-I9000") ||                // Galaxy S
+                m("IM-A760S") ||                // SKY Vega Racer (SKT)
+                m("IM-A780L") ||                // SKY Vega Racer (LG U+)
+                m("IM-A770K")) {                // SKY Vega Racer (KT)
+            viewportSize = "480x800x217";
+
+        } else if (m("LG-P895") ||              // Optimus Vu
+                m("LG-F100L") ||                // Optimus Vu
+                m("LG-F200K")) {                // Optimus Vu II
+            viewportSize = "768x1024x256";
+
+        } else if (m("SM-N900T")) {             // Galaxy Note 3
+            viewportSize = "1080x1920x386";
+
+        } else if (m("GT-N7100")) {             // Galaxy Note 2
+            viewportSize = "720x1280x256";
+
+        } else if (m("Nexus S")) {              // Google Nexus S
+            viewportSize = "480x800x233";
+
+        } else if (m("iPad")) {                 // 12 inch
+            viewportSize = "768x1024x132";
+
+        } else {
+            viewportSize = OTHER_VIEWPORT_SIZE;
         }
 
         Device device = new Device();
